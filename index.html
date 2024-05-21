@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 98%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+     <title>AMINCO s.r.l</title>
+     <link rel="icon" href="images\logo_aminco.jpg" type="image/x-icon">
+     
+
+     <!-- encabezado  -->
+ <header class=""  >
+     <div class="wrapper">
+         <img src="images\logo_aminco.jpg" alt="Estar" style="float: right" ; width="62" height="42"  />
+       <div class="logo"> SALAR DE ARIZARO -SPEY RESOURCE CORP.- </div> 
+      
+     </div>
+ </header> 
+   <!-- encabezado -->
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Salta_Jujuy_Cata_1.js"></script>
+        <script src="data/Salaressalares_2.js"></script>
+        <script src="data/AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:7
+        }).fitBounds([[-24.35554909189632,-67.74872158739608],[-24.218690930672285,-67.44030140592538]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://www.aminco.ar/" target="_blank">AMINCO s.r.l</a> &middot;');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        document.querySelector(".leaflet-popup-pane").addEventListener("load", function(event) {
+          var tagName = event.target.tagName,
+            popup = map._popup;
+          // Also check if flag is already set.
+          if (tagName === "IMG" && popup && !popup._updated) {
+            popup._updated = true; // Set flag to prevent looping.
+            popup.update();
+          }
+        }, true);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.aminco.ar/" target="_blank">Elaborado by M.Pepenal</a> &middot;',
+            minZoom: 7,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_Salta_Jujuy_Cata_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gid'] !== null ? autolinker.link(feature.properties['gid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['entidad'] !== null ? autolinker.link(feature.properties['entidad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fna'] !== null ? autolinker.link(feature.properties['fna'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gna'] !== null ? autolinker.link(feature.properties['gna'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nam'] !== null ? autolinker.link(feature.properties['nam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['in1'] !== null ? autolinker.link(feature.properties['in1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fdc'] !== null ? autolinker.link(feature.properties['fdc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['sag'] !== null ? autolinker.link(feature.properties['sag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Salta_Jujuy_Cata_1_0() {
+            return {
+                pane: 'pane_Salta_Jujuy_Cata_1',
+                opacity: 1,
+                color: 'rgba(247,247,247,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Salta_Jujuy_Cata_1');
+        map.getPane('pane_Salta_Jujuy_Cata_1').style.zIndex = 401;
+        map.getPane('pane_Salta_Jujuy_Cata_1').style['mix-blend-mode'] = 'normal';
+        var layer_Salta_Jujuy_Cata_1 = new L.geoJson(json_Salta_Jujuy_Cata_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Salta_Jujuy_Cata_1',
+            layerName: 'layer_Salta_Jujuy_Cata_1',
+            pane: 'pane_Salta_Jujuy_Cata_1',
+            onEachFeature: pop_Salta_Jujuy_Cata_1,
+            style: style_Salta_Jujuy_Cata_1_0,
+        });
+        bounds_group.addLayer(layer_Salta_Jujuy_Cata_1);
+        map.addLayer(layer_Salta_Jujuy_Cata_1);
+        function pop_Salaressalares_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nom'] !== null ? autolinker.link(feature.properties['Nom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Salaressalares_2_0() {
+            return {
+                pane: 'pane_Salaressalares_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,206,227,0.3254901960784314)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Salaressalares_2');
+        map.getPane('pane_Salaressalares_2').style.zIndex = 402;
+        map.getPane('pane_Salaressalares_2').style['mix-blend-mode'] = 'normal';
+        var layer_Salaressalares_2 = new L.geoJson(json_Salaressalares_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Salaressalares_2',
+            layerName: 'layer_Salaressalares_2',
+            pane: 'pane_Salaressalares_2',
+            onEachFeature: pop_Salaressalares_2,
+            style: style_Salaressalares_2_0,
+        });
+        bounds_group.addLayer(layer_Salaressalares_2);
+        map.addLayer(layer_Salaressalares_2);
+        function pop_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">tipo</th>\
+                        <td>' + (feature.properties['tipo'] !== null ? autolinker.link(feature.properties['tipo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">expediente</th>\
+                        <td>' + (feature.properties['expediente'] !== null ? autolinker.link(feature.properties['expediente'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">nombre</th>\
+                        <td>' + (feature.properties['nombre'] !== null ? autolinker.link(feature.properties['nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mineral</th>\
+                        <td>' + (feature.properties['mineral'] !== null ? autolinker.link(feature.properties['mineral'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">concesiona</th>\
+                        <td>' + (feature.properties['concesiona'] !== null ? autolinker.link(feature.properties['concesiona'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">municipio</th>\
+                        <td>' + (feature.properties['municipio'] !== null ? autolinker.link(feature.properties['municipio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">lugar</th>\
+                        <td>' + (feature.properties['lugar'] !== null ? autolinker.link(feature.properties['lugar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">area</th>\
+                        <td>' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3_0() {
+            return {
+                pane: 'pane_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,0.6627450980392157)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3');
+        map.getPane('pane_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3').style.zIndex = 403;
+        map.getPane('pane_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3').style['mix-blend-mode'] = 'normal';
+        var layer_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3 = new L.geoJson(json_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3',
+            layerName: 'layer_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3',
+            pane: 'pane_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3',
+            onEachFeature: pop_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3,
+            style: style_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3_0,
+        });
+        bounds_group.addLayer(layer_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3);
+        map.addLayer(layer_AMERICASALARSLITHIUMempresa_incahuasi__catastro_minero_poligonos_1_3);
+            var abstract = new L.Control({'position':'bottomleft'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+
+                    abstract.show();
+                    return this._div;
+                };
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'Web Map desarrollado para visualizar la información de los catastros correspondientes a SPEY RESOURCE CORP.<br />Para ello, dar click dentro de los mismos.';
+            };
+            abstract.addTo(map);
+        setBounds();
+        var i = 0;
+        layer_Salta_Jujuy_Cata_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['nam'] !== null?String('<div style="color: #323232; font-size: 15pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['nam']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Salta_Jujuy_Cata_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Salaressalares_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nom'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Arial Black\', sans-serif;">' + layer.feature.properties['Nom']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Salaressalares_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_Salta_Jujuy_Cata_1,layer_Salaressalares_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Salta_Jujuy_Cata_1,layer_Salaressalares_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Salta_Jujuy_Cata_1,layer_Salaressalares_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Salta_Jujuy_Cata_1,layer_Salaressalares_2]);
+        });
+        </script>
+    </body>
+</html>
